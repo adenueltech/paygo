@@ -59,7 +59,7 @@ export function Hero() {
           <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 blur-[100px] rounded-full" />
 
           <img
-            src="/images/hero-robot.png"
+            src="/heroimg.png"
             alt="Future of Payments"
             className="relative z-10 h-auto w-full max-w-md object-contain drop-shadow-2xl"
           />

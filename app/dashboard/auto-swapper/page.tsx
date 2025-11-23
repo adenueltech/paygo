@@ -9,6 +9,8 @@ export default function AutoSwapperPage() {
         <p className="text-gray-400">Set up automatic currency swaps based on your preferences.</p>
       </div>
 
+      {/* fff */}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column - Configuration Form */}
         <div className="space-y-6">
