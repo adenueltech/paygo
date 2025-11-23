@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
+
 export function Hero() {
   return (
     <section className="relative min-h-screen w-full bg-paygo-dark overflow-hidden pt-32 flex items-center">

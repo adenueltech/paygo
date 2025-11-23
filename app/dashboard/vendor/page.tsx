@@ -8,15 +8,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function VendorPage() {
   return (
-    <div className="space-y-8">
+    <div className="w-full max-w-full">
+      <div className="space-y-4 sm:space-y-6 xl:space-y-8 w-full">
       <div>
         <h1 className="text-3xl font-bold text-white">Vendor Dashboard</h1>
         <p className="text-gray-400">Manage your services, consultations, and earnings.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-8">
         {/* Left Column */}
-        <div className="lg:col-span-2 space-y-6 lg:space-y-8">
+        <div className="xl:col-span-2 space-y-4 sm:space-y-6 xl:space-y-8">
           <VendorOverview />
 
           <div>
@@ -51,6 +52,7 @@ export default function VendorPage() {
 
           <VendorSettings />
         </div>
+      </div>
       </div>
     </div>
   )
