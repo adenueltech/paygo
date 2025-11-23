@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export function Hero() {
   return (
@@ -58,10 +59,13 @@ export function Hero() {
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 blur-[100px] rounded-full" />
 
-          <img
+          <Image
             src="/heroimg.png"
             alt="Future of Payments"
+            width={400}
+            height={400}
             className="relative z-10 h-auto w-full max-w-md object-contain drop-shadow-2xl"
+            priority
           />
         </motion.div>
       </div>
