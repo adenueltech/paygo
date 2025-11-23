@@ -107,7 +107,7 @@ export function CreateSessionModal({ isOpen, onClose }: CreateSessionModalProps)
                   <Label className="text-sm font-medium text-gray-300">Description</Label>
                   <Textarea
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                     placeholder="Describe what this session covers..."
                     className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 min-h-[80px]"
                   />

@@ -32,7 +32,7 @@ export function TransferModal({ isOpen, onClose, type }: TransferModalProps) {
     return numAmount * 0.005 // 0.5% for crypto withdrawals
   }
 
-  const fee = calculateFee(Number(amount || "0"), type === "withdraw" ? withdrawalMethod : "transfer", asset)
+  const fee = calculateFee(Number(amount || "0"), type === "withdraw" ? withdrawalMethod : "send", asset)
   const total = type === "withdraw" ? Number(amount || "0") + fee : Number(amount || "0")
 
   const handleConfirm = async () => {
@@ -252,7 +252,7 @@ export function TransferModal({ isOpen, onClose, type }: TransferModalProps) {
                 )}
                 {type === "withdraw" && (
                   <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
-                    <span className="text-white">Total {type === "send" ? "Sent" : "Deducted"}</span>
+                    <span className="text-white">Total Deducted</span>
                     <span className="text-white">
                       {asset === "ngn" ? `₦${total.toLocaleString()}` : `${amount} ${asset.toUpperCase()}`}
                     </span>

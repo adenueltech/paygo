@@ -3,152 +3,100 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const currencies = [
-  { value: "USD", label: "USD" },
-  { value: "EUR", label: "EUR" },
-  { value: "BTC", label: "BTC" },
-  { value: "ETH", label: "ETH" },
-  { value: "NGN", label: "NGN" },
-]
-
-const triggerTypes = [
-  { value: "price", label: "Price Threshold" },
-  { value: "time", label: "Time Interval" },
-]
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { RefreshCw, AlertCircle } from "lucide-react"
 
 export function AutoSwapperForm() {
-  const [sourceCurrency, setSourceCurrency] = useState("")
-  const [targetCurrency, setTargetCurrency] = useState("")
-  const [triggerType, setTriggerType] = useState("")
-  const [priceThreshold, setPriceThreshold] = useState("")
-  const [priceOperator, setPriceOperator] = useState(">")
-  const [timeInterval, setTimeInterval] = useState("")
-  const [amount, setAmount] = useState("")
+  const [fromAsset, setFromAsset] = useState("usdt")
+  const [toAsset, setToAsset] = useState("ngn")
+  const [threshold, setThreshold] = useState("")
+  const [isActive, setIsActive] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
-    console.log({
-      sourceCurrency,
-      targetCurrency,
-      triggerType,
-      priceThreshold: triggerType === "price" ? `${priceOperator}${priceThreshold}` : null,
-      timeInterval: triggerType === "time" ? timeInterval : null,
-      amount,
-    })
+    setIsActive(true)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="source-currency" className="text-white">Source Currency</Label>
-          <Select value={sourceCurrency} onValueChange={setSourceCurrency}>
-            <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
-              <SelectValue placeholder="Select source" />
-            </SelectTrigger>
-            <SelectContent>
-              {currencies.map((currency) => (
-                <SelectItem key={currency.value} value={currency.value}>
-                  {currency.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label htmlFor="target-currency" className="text-white">Target Currency</Label>
-          <Select value={targetCurrency} onValueChange={setTargetCurrency}>
-            <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
-              <SelectValue placeholder="Select target" />
-            </SelectTrigger>
-            <SelectContent>
-              {currencies.map((currency) => (
-                <SelectItem key={currency.value} value={currency.value}>
-                  {currency.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div>
-        <Label htmlFor="trigger-type" className="text-white">Trigger Type</Label>
-        <Select value={triggerType} onValueChange={setTriggerType}>
-          <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
-            <SelectValue placeholder="Select trigger type" />
-          </SelectTrigger>
-          <SelectContent>
-            {triggerTypes.map((type) => (
-              <SelectItem key={type.value} value={type.value}>
-                {type.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {triggerType === "price" && (
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="price-operator" className="text-white">Operator</Label>
-            <Select value={priceOperator} onValueChange={setPriceOperator}>
-              <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value=">">Greater than</SelectItem>
-                <SelectItem value="<">Less than</SelectItem>
-              </SelectContent>
-            </Select>
+    <Card>
+      <CardHeader>
+        <CardTitle>Configure Auto Swap</CardTitle>
+        <CardDescription>
+          Set up automatic currency conversion when your balance reaches a threshold.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="fromAsset">From Asset</Label>
+              <Select value={fromAsset} onValueChange={setFromAsset}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="usdt">USDT</SelectItem>
+                  <SelectItem value="btc">BTC</SelectItem>
+                  <SelectItem value="eth">ETH</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="toAsset">To Asset</Label>
+              <Select value={toAsset} onValueChange={setToAsset}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ngn">NGN</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div>
-            <Label htmlFor="price-threshold" className="text-white">Threshold Value</Label>
+
+          <div className="space-y-2">
+            <Label htmlFor="threshold">Trigger Threshold (NGN)</Label>
             <Input
-              id="price-threshold"
+              id="threshold"
               type="number"
-              placeholder="e.g., 50000"
-              value={priceThreshold}
-              onChange={(e) => setPriceThreshold(e.target.value)}
-              className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
+              placeholder="e.g., 1000"
+              value={threshold}
+              onChange={(e) => setThreshold(e.target.value)}
             />
+            <p className="text-sm text-gray-500">
+              Auto swap will trigger when your {fromAsset.toUpperCase()} balance can be converted to NGN above this amount.
+            </p>
           </div>
-        </div>
-      )}
 
-      {triggerType === "time" && (
-        <div>
-          <Label htmlFor="time-interval" className="text-white">Interval (hours)</Label>
-          <Input
-            id="time-interval"
-            type="number"
-            placeholder="e.g., 24"
-            value={timeInterval}
-            onChange={(e) => setTimeInterval(e.target.value)}
-            className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-          />
-        </div>
-      )}
+          <div className="flex items-center gap-2 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+            <AlertCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+            <div className="text-sm">
+              <p className="font-medium text-yellow-700">Exchange Rate</p>
+              <p className="text-yellow-600">1 {fromAsset.toUpperCase()} ≈ ₦1,500 NGN (estimated)</p>
+            </div>
+          </div>
 
-      <div>
-        <Label htmlFor="amount" className="text-white">Amount to Swap</Label>
-        <Input
-          id="amount"
-          type="number"
-          placeholder="Enter amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-        />
-      </div>
+          <Button type="submit" className="w-full" disabled={!threshold}>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            {isActive ? "Update Auto Swap" : "Create Auto Swap"}
+          </Button>
+        </form>
 
-      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-        Create Auto Swap
-      </Button>
-    </form>
+        {isActive && (
+          <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-sm font-medium text-green-700">Auto Swap Active</span>
+            </div>
+            <p className="text-sm text-green-600 mt-1">
+              Monitoring {fromAsset.toUpperCase()} balance for conversion to NGN above ₦{threshold}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
