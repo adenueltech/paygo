@@ -1,10 +1,8 @@
 "use client"
-import { Video, Calendar, Clock, ArrowRight, Plus, Settings, DollarSign, Users } from "lucide-react"
+import { Video, Calendar, Clock, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
-import { CreateSessionModal } from "@/components/dashboard/create-session-modal"
 
 const upcomingSessions = [
   {
@@ -33,123 +31,6 @@ const upcomingSessions = [
 
 export default function SessionsPage() {
   const router = useRouter()
-  const [userType, setUserType] = useState<"user" | "vendor">("user")
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-
-  useEffect(() => {
-    const stored = localStorage.getItem("userType") as "user" | "vendor" | null
-    if (stored) {
-      setUserType(stored)
-    }
-  }, [])
-
-  if (userType === "vendor") {
-    return (
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Professional Portal</h1>
-          <p className="text-gray-400">Manage your live sessions, pricing, and earnings.</p>
-        </div>
-
-        {/* Revenue Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                <DollarSign className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium">Total Earnings</h3>
-                <p className="text-gray-400 text-sm">This month</p>
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-white">₦245,850</p>
-            <p className="text-green-400 text-sm">+12.5% from last month</p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                <Users className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium">Active Sessions</h3>
-                <p className="text-gray-400 text-sm">Currently live</p>
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-white">3</p>
-            <p className="text-blue-400 text-sm">2 consultations, 1 streaming</p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                <Settings className="h-5 w-5 text-yellow-400" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium">Average Rating</h3>
-                <p className="text-gray-400 text-sm">Client feedback</p>
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-white">4.8</p>
-            <p className="text-yellow-400 text-sm">⭐⭐⭐⭐⭐ (127 reviews)</p>
-          </div>
-        </div>
-
-        {/* Create Live Session */}
-        <div className="bg-gradient-to-r from-purple-900/50 to-purple-600/20 border border-purple-500/30 rounded-2xl p-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-2">Create Live Session</h2>
-              <p className="text-gray-300">Set up a new consultation or streaming session</p>
-            </div>
-            <Button
-              onClick={() => setIsCreateModalOpen(true)}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
-            >
-              <Plus className="h-5 w-5 mr-2" />
-              New Session
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">Pricing Setup</h3>
-              <p className="text-gray-400 text-sm">Set your rates per minute/hour</p>
-              <p className="text-white font-bold mt-2">₦500/min</p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">Availability</h3>
-              <p className="text-gray-400 text-sm">Manage your calendar</p>
-              <p className="text-white font-bold mt-2">Mon-Fri, 9AM-5PM</p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-white font-medium mb-2">Session Types</h3>
-              <p className="text-gray-400 text-sm">Consultation & Streaming</p>
-              <p className="text-white font-bold mt-2">Both Available</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Active Sessions */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-6">Active Sessions</h3>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <div className="text-center text-gray-400">
-              <Video className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No active sessions at the moment</p>
-              <p className="text-sm">Create a new session to get started</p>
-            </div>
-          </div>
-        </div>
-
-        <CreateSessionModal
-          isOpen={isCreateModalOpen}
-          onClose={() => setIsCreateModalOpen(false)}
-        />
-      </div>
-    )
-  }
 
   return (
     <div className="space-y-8">

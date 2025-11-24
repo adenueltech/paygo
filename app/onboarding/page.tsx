@@ -74,6 +74,16 @@ export default function OnboardingPage() {
 }
 
 function WalletSetup({ onNext }: { onNext: () => void }) {
+  const [isCreating, setIsCreating] = useState(false)
+
+  const handleCreateWallet = async () => {
+    setIsCreating(true)
+    // Simulate wallet creation
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    setIsCreating(false)
+    onNext()
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -81,38 +91,62 @@ function WalletSetup({ onNext }: { onNext: () => void }) {
       exit={{ opacity: 0, x: -20 }}
       className="flex flex-col h-full"
     >
-      <h2 className="text-2xl font-bold text-white mb-2">Setup your Wallet</h2>
-      <p className="text-gray-300 mb-8">Create a new wallet or connect an existing one to get started.</p>
+      <h2 className="text-2xl font-bold text-white mb-2">Creating Your Wallet</h2>
+      <p className="text-gray-300 mb-8">We're setting up your secure digital wallet automatically.</p>
 
-      <div className="grid gap-4 mb-8">
-        <button
-          onClick={onNext}
-          className="flex items-center p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors text-left group"
-        >
-          <div className="h-12 w-12 rounded-full bg-blue-500/20 flex items-center justify-center mr-4 group-hover:bg-blue-500/30">
-            <Wallet className="h-6 w-6 text-blue-400" />
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="text-center">
+          <div className="relative mb-8">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
+              <Wallet className="h-12 w-12 text-white" />
+            </div>
+            {isCreating && (
+              <motion.div
+                className="absolute inset-0 border-4 border-blue-500/30 border-t-blue-500 rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+            )}
           </div>
-          <div>
-            <h3 className="text-white font-medium">Create New Wallet</h3>
-            <p className="text-sm text-gray-400">Get a new fiat & crypto wallet instantly</p>
-          </div>
-          <ArrowRight className="ml-auto h-5 w-5 text-gray-500 group-hover:text-white" />
-        </button>
 
-        <button
-          onClick={onNext}
-          className="flex items-center p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors text-left group"
-        >
-          <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center mr-4 group-hover:bg-purple-500/30">
-            <CreditCard className="h-6 w-6 text-purple-400" />
-          </div>
-          <div>
-            <h3 className="text-white font-medium">Connect Existing Wallet</h3>
-            <p className="text-sm text-gray-400">MetaMask, Coinbase, or WalletConnect</p>
-          </div>
-          <ArrowRight className="ml-auto h-5 w-5 text-gray-500 group-hover:text-white" />
-        </button>
+          {!isCreating ? (
+            <div className="space-y-4">
+              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                <div className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-green-400" />
+                  <span className="text-green-300 font-medium">Wallet Created Successfully!</span>
+                </div>
+                <p className="text-green-200 text-sm mt-1">Your secure wallet is ready to use</p>
+              </div>
+              <Button onClick={onNext} className="bg-white text-black hover:bg-gray-200 px-8">
+                Continue
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="text-white text-lg font-medium">Setting up your wallet...</div>
+              <div className="flex justify-center space-x-2">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
+      {!isCreating && (
+        <div className="mt-auto">
+          <div className="bg-white/5 rounded-lg p-4 space-y-2">
+            <h4 className="text-white font-medium text-sm">Your Wallet Details</h4>
+            <div className="text-xs text-gray-400 space-y-1">
+              <div>Address: 0x71C...39A2</div>
+              <div>Network: Ethereum & Polygon</div>
+              <div>Security: Hardware-backed encryption</div>
+            </div>
+          </div>
+        </div>
+      )}
     </motion.div>
   )
 }

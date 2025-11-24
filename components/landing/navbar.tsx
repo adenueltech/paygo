@@ -46,14 +46,8 @@ export function Navbar() {
               NGN <ChevronDown className="h-3 w-3" />
             </button>
             <Link href="/auth" className="text-white hover:text-gray-200 font-medium">
-              SignIn
+              Sign Up
             </Link>
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-transparent border border-white text-white hover:bg-white hover:text-black rounded-full px-6"
-            >
-              Connect Wallet
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -86,17 +80,8 @@ export function Navbar() {
               <button className="text-white border border-white/20 rounded-full px-3 py-1 text-sm">NGN</button>
             </div>
             <Link href="/auth" className="text-white text-left py-2">
-              SignIn
+              Sign Up
             </Link>
-            <Button
-              onClick={() => {
-                setIsModalOpen(true)
-                setIsMobileMenuOpen(false)
-              }}
-              className="w-full bg-transparent border border-white text-white hover:bg-white hover:text-black rounded-full"
-            >
-              Connect Wallet
-            </Button>
           </motion.div>
         )}
       </nav>

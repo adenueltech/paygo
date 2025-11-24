@@ -11,9 +11,8 @@ import { cn } from "@/lib/utils"
 
 const userNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Marketplace", href: "/dashboard/marketplace", icon: ShoppingBag },
+  { name: "Services & Sessions", href: "/dashboard/marketplace", icon: ShoppingBag },
   { name: "Wallet", href: "/dashboard/wallet", icon: Wallet },
-  { name: "Live Sessions", href: "/dashboard/sessions", icon: Video },
   { name: "Profile", href: "/dashboard/profile", icon: User },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
@@ -22,7 +21,6 @@ const vendorNavigation = [
   { name: "Dashboard", href: "/dashboard/vendor", icon: LayoutDashboard },
   { name: "Services", href: "/dashboard/vendor", icon: Briefcase },
   { name: "Wallet", href: "/dashboard/wallet", icon: Wallet },
-  { name: "Live Sessions", href: "/dashboard/sessions", icon: Video },
   { name: "Profile", href: "/dashboard/profile", icon: User },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
